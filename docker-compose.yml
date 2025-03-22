@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.7'
 
 services:
   app:
@@ -18,12 +18,11 @@ services:
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=course_management
     volumes:
-      - ./:/app
-      - /app/node_modules
+      - ./src:/app/src
     restart: unless-stopped
 
   mongodb:
-    image: mongo:6
+    image: mongo:4.4.6
     ports:
       - "27017:27017"
     volumes:
@@ -31,9 +30,9 @@ services:
     restart: unless-stopped
 
   mysql:
-    image: mysql:8
+    image: mariadb:10.5.8
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=course_management

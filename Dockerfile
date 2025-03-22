@@ -1,13 +1,18 @@
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
 
-RUN npm ci
+# Install dependencies including dev dependencies
+RUN npm install
 
+# Copy source code
 COPY . .
 
-RUN npm run build
+# Expose port
+EXPOSE 3000
 
-CMD ["npm", "run", "start:prod"] 
+# Start the app in development mode
+CMD ["npm", "run", "start:dev"] 
