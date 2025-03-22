@@ -21,6 +21,27 @@ services:
       - ./src:/app/src
     restart: unless-stopped
 
+  db-init:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+      - mysql
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/course-management
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=course_management
+      - SEED_ONLY=true
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["apk add --no-cache netcat-openbsd && ./wait-for-db.sh mongodb mysql /app/startup.sh"]
+    volumes:
+      - ./wait-for-db.sh:/app/wait-for-db.sh
+    restart: "no"
+
   mongodb:
     image: mongo:4.4.6
     ports:

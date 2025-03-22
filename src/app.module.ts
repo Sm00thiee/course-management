@@ -6,9 +6,16 @@ import { CoreModule } from './core/core.module';
 import { InfraModule } from './infra/infra.module';
 import { LoggerMiddleware } from './infra/middleware/logger.middleware';
 import { AuthInfraModule } from './infra/auth/auth.module';
+import { SeedModule } from './infra/database/seeds/seed.module';
 
 @Module({
-  imports: [ApiModule, CoreModule, InfraModule, AuthInfraModule],
+  imports: [
+    ApiModule, 
+    CoreModule, 
+    InfraModule, 
+    AuthInfraModule,
+    SeedModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
